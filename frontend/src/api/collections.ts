@@ -7,6 +7,7 @@ import {
 } from "../types";
 
 const { REACT_APP_API_ROOT_URL } = process.env;
+console.log(REACT_APP_API_ROOT_URL);
 
 export const createCollection = async (
   collectionData: CollectionIn,

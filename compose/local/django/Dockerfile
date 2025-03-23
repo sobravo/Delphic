@@ -6,6 +6,9 @@ FROM python as python-build-stage
 
 ARG BUILD_ENVIRONMENT=local
 
+ENV http_proxy=http://192.168.2.5:7890
+ENV https_proxy=http://192.168.2.5:7890
+
 # Install apt packages
 RUN apt-get update && apt-get install --no-install-recommends -y \
   # dependencies for building Python packages

@@ -77,7 +77,7 @@ export const LoginForm = ({ onLogin }: LoginFormProps) => {
 
     try {
       const response = await axios.post<LoginResponse>(
-        "http://localhost:8000/api/token/pair",
+        "http://192.168.2.29:8000/api/token/pair",
         { username, password },
       );
       localStorage.setItem("accessToken", response.data.access);

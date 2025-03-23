@@ -16,6 +16,8 @@ from llama_index import (
 
 from config import celery_app
 from delphic.indexes.models import Collection, CollectionStatus
+from llama_index.llms.openai_like import OpenAILike
+
 
 logger = logging.getLogger(__name__)
 
@@ -68,14 +70,20 @@ def create_index(collection_id):
                 documents = loader.load_data()
                 # index = GPTSimpleVectorIndex(documents)
 
-                # documents = SimpleDirectoryReader(str(tempdir_path)).load_data()
-                llm_predictor = LLMPredictor(
-                    llm=OpenAI(
-                        temperature=0,
-                        model_name=settings.MODEL_NAME,
-                        max_tokens=settings.MAX_TOKENS,
-                    )
+                deepseek_llm = OpenAILike(
+                    model=settings.DEEPSEEK_MODEL_NAME,
+                    api_base=settings.DEEPSEEK_API_BASE,
+                    api_key=settings.DEEPSEEK_API_KEY,
+                    max_tokens=settings.MAX_TOKENS
                 )
+
+                #llm=OpenAI(
+                #    temperature=0,
+                #    model_name=settings.MODEL_NAME,
+                #    max_tokens=settings.MAX_TOKENS,
+                #)
+                # documents = SimpleDirectoryReader(str(tempdir_path)).load_data()
+                llm_predictor = LLMPredictor(llm)
                 service_context = ServiceContext.from_defaults(
                     llm_predictor=llm_predictor
                 )
